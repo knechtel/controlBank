@@ -5,14 +5,12 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-
 class AuthUserGroup(db.Model):
     __tablename__ = 'auth_user_group'
 
     auth_user_group_id = db.Column(db.BigInteger, primary_key=True)
     auth_group = db.Column(db.String(255))
     username = db.Column(db.String(255))
-
 
 
 class Client(db.Model):
@@ -22,7 +20,6 @@ class Client(db.Model):
     cpf = db.Column(db.String(255))
     email = db.Column(db.String(255))
     name = db.Column(db.String(255))
-
 
 
 class Equipment(db.Model):
@@ -35,13 +32,13 @@ class Equipment(db.Model):
     model = db.Column(db.String(255))
     serial = db.Column(db.String(255))
     client_id = db.Column(db.ForeignKey('client.id'), index=True)
-    autorizado = db.Column(db.BIT(1), nullable=False)
-    pronto = db.Column(db.BIT(1), nullable=False)
+    autorizado = db.Column(db.Boolean, nullable=True)
+    pronto = db.Column(db.Boolean, nullable=False)
     data_entrega = db.Column(db.DateTime)
     data_entrada = db.Column(db.DateTime)
 
-    client = db.relationship('Client', primaryjoin='Equipment.client_id == Client.id', backref='equipments')
-
+    client = db.relationship(
+        'Client', primaryjoin='Equipment.client_id == Client.id', backref='equipments')
 
 
 class Guest(db.Model):
@@ -57,12 +54,10 @@ class Guest(db.Model):
     state = db.Column(db.String(255))
 
 
-
 t_hibernate_sequence = db.Table(
     'hibernate_sequence',
     db.Column('next_val', db.BigInteger)
 )
-
 
 
 class O(db.Model):
@@ -72,9 +67,10 @@ class O(db.Model):
     client_id = db.Column(db.ForeignKey('client.id'), index=True)
     equipment_id = db.Column(db.ForeignKey('equipment.id'), index=True)
 
-    client = db.relationship('Client', primaryjoin='O.client_id == Client.id', backref='oes')
-    equipment = db.relationship('Equipment', primaryjoin='O.equipment_id == Equipment.id', backref='oes')
-
+    client = db.relationship(
+        'Client', primaryjoin='O.client_id == Client.id', backref='oes')
+    equipment = db.relationship(
+        'Equipment', primaryjoin='O.equipment_id == Equipment.id', backref='oes')
 
 
 t_perfis = db.Table(
@@ -82,7 +78,6 @@ t_perfis = db.Table(
     db.Column('user_id', db.ForeignKey('user.id'), nullable=False, index=True),
     db.Column('perfis', db.Integer)
 )
-
 
 
 class User(db.Model):
