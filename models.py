@@ -1,6 +1,6 @@
 # coding: utf-8
 from flask_sqlalchemy import SQLAlchemy
-
+from json import JSONEncoder
 
 db = SQLAlchemy()
 
@@ -20,6 +20,10 @@ class Client(db.Model):
     cpf = db.Column(db.String(255))
     email = db.Column(db.String(255))
     name = db.Column(db.String(255))
+
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True, indent=4)
 
 
 class Equipment(db.Model):
@@ -88,3 +92,10 @@ class User(db.Model):
     login = db.Column(db.String(255))
     password = db.Column(db.String(255))
     username = db.Column(db.String(255))
+
+# subclass JSONEncoder
+
+
+class ClientEncoder(JSONEncoder):
+    def default(self, o):
+        return o.__dict__
