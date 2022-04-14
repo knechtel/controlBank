@@ -8,14 +8,10 @@ sessionobj = Session()
 
 
 client = Client()
-
 client.name = "Frederico"
-
 client.cpf = "016.379.480-32"
-
 client.email = "fredknechtel@gmail.com"
 
 sessionobj.add(client)
 sessionobj.commit()
-
 sessionobj.close()
