@@ -20,7 +20,7 @@ def hello():
 class ClientSchema(ma.Schema):
     class Meta:
         model = Client
-        fields = ("name", "cpf", "email")
+        fields = ("name", "cpf", "email", "id")
 
 
 @app.route("/client/")
