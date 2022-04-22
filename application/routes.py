@@ -86,4 +86,17 @@ class GetAndPost(Resource):
       sessionobj.commit()
       output = equipment_schema.dump(jsonStr)
       return jsonify(output)
+
+    def post(self):
+        data = api.payload
+        equipment = Equipment(pronto=True, autorizado=True, brand=data["brand"],
+                              defect_for_repair=data["defect_for_repair"], model=data["model"])
+        engine = sqlalchemy.create_engine('mysql://root:123@localhost/loja')
+        Session = sessionmaker(bind=engine)
+        sessionobj = Session()
+        sessionobj.add(equipment)
+        sessionobj.commit()
+        equipment_schema = EquipmentSchema()
+        output = equipment_schema.dump(equipment)
+        return jsonify(output)
 #################################
