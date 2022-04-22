@@ -1,4 +1,4 @@
-from app import *
+from application import *
 
 
 @app.route('/equipamento', methods=['GET'])
