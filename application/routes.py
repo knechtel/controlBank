@@ -1,6 +1,6 @@
 import equipamento_controller
 from flask import Flask, make_response, jsonify
-from models import Client
+from models import Client, Equipment
 from sqlalchemy.orm import sessionmaker
 import sqlalchemy
 import json
@@ -21,6 +21,12 @@ class ClientSchema(ma.Schema):
     class Meta:
         model = Client
         fields = ("name", "cpf", "email", "id")
+
+
+class EquipmentSchema(ma.Schema):
+    class Meta:
+        model = Equipment
+        fields = ("brand", "defect_for_repair", "model", "id")
 
 
 @app.route("/client/")
@@ -65,4 +71,19 @@ class GetAndPost(Resource):
         client_schema = ClientSchema()
         output = client_schema.dump(client)
         return jsonify(output)
+
+
+@api.route('/api/equipment')
+class GetAndPost(Resource):
+
+    # GET ALL
+    def get(self):
+      engine = sqlalchemy.create_engine('mysql://root:123@localhost/loja')
+      Session = sessionmaker(bind=engine)
+      sessionobj = Session()
+      jsonStr = sessionobj.query(Equipment).all()
+      equipment_schema = EquipmentSchema(many=True)
+      sessionobj.commit()
+      output = equipment_schema.dump(jsonStr)
+      return jsonify(output)
 #################################
