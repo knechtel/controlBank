@@ -50,5 +50,19 @@ class GetAndPost(Resource):
         sessionobj.commit()
         output = client_schema.dump(jsonStr)
         return jsonify(output)
+    #POST
 
+    def post(self):
+        data = api.payload
+        client = Client(cpf=data["cpf"],
+                        name=data["name"], email=data["email"])
+        print("passei aqui...")
+        engine = sqlalchemy.create_engine('mysql://root:123@localhost/loja')
+        Session = sessionmaker(bind=engine)
+        sessionobj = Session()
+        sessionobj.add(client)
+        sessionobj.commit()
+        client_schema = ClientSchema()
+        output = client_schema.dump(client)
+        return jsonify(output)
 #################################
