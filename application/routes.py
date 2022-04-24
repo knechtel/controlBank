@@ -1,3 +1,4 @@
+from dao.factory import *
 import equipamento_controller
 from flask import Flask, make_response, jsonify
 from models import Client, Equipment
@@ -41,12 +42,9 @@ class GetAndPost(Resource):
         data = api.payload
         client = Client(cpf=data["cpf"],
                         name=data["name"], email=data["email"])
-        print("passei aqui...")
-        engine = sqlalchemy.create_engine('mysql://root:123@localhost/loja')
-        Session = sessionmaker(bind=engine)
-        sessionobj = Session()
-        sessionobj.add(client)
-        sessionobj.commit()
+
+        equipment_dao.save(client)
+
         client_schema = ClientSchema()
         output = client_schema.dump(client)
         return jsonify(output)
@@ -66,11 +64,8 @@ class GetAndPost(Resource):
         data = api.payload
         equipment = Equipment(pronto=True, autorizado=True, brand=data["brand"],
                               defect_for_repair=data["defect_for_repair"], model=data["model"])
-        engine = sqlalchemy.create_engine('mysql://root:123@localhost/loja')
-        Session = sessionmaker(bind=engine)
-        sessionobj = Session()
-        sessionobj.add(equipment)
-        sessionobj.commit()
+
+        equipment_dao.save(equipment)
         equipment_schema = EquipmentSchema()
         output = equipment_schema.dump(equipment)
         return jsonify(output)
