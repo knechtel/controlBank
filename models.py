@@ -13,7 +13,7 @@ class AuthUserGroup(db.Model):
     username = db.Column(db.String(255))
 
 
-class Client(db.Model):
+class  Client(db.Model):
     __tablename__ = 'client'
 
     id = db.Column(db.Integer, primary_key=True)
