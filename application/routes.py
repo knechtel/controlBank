@@ -12,11 +12,6 @@ from dao import client_dao, equipment_dao
 ma = Marshmallow(app)
 
 
-@app.route("/")
-def hello():
-    return "hello 1!11"
-
-
 class ClientSchema(ma.Schema):
     class Meta:
         model = Client
@@ -29,17 +24,6 @@ class EquipmentSchema(ma.Schema):
         fields = ("brand", "defect_for_repair", "model", "id")
 
 
-@app.route("/client/")
-def client():
-    engine = sqlalchemy.create_engine('mysql://root:123@localhost/loja')
-    Session = sessionmaker(bind=engine)
-    sessionobj = Session()
-    jsonStr = sessionobj.query(Client).all()
-    client_schema = ClientSchema(many=True)
-    sessionobj.commit()
-    output = client_schema.dump(jsonStr)
-    return jsonify(output)
-
 #################################
 
 
@@ -48,12 +32,11 @@ class GetAndPost(Resource):
 
     # GET ALL
     def get(self):
-
         client_schema = ClientSchema(many=True)
         output = client_schema.dump(client_dao.find_all())
         return jsonify(output)
-    # POST
 
+    # POST
     def post(self):
         data = api.payload
         client = Client(cpf=data["cpf"],
