@@ -8,7 +8,7 @@ from flask import jsonify
 from flask_restx import Resource
 from flask_marshmallow import Marshmallow
 from application import app, api
-
+from dao import client_dao
 ma = Marshmallow(app)
 
 
@@ -48,15 +48,11 @@ class GetAndPost(Resource):
 
     # GET ALL
     def get(self):
-        engine = sqlalchemy.create_engine('mysql://root:123@localhost/loja')
-        Session = sessionmaker(bind=engine)
-        sessionobj = Session()
-        jsonStr = sessionobj.query(Client).all()
+
         client_schema = ClientSchema(many=True)
-        sessionobj.commit()
-        output = client_schema.dump(jsonStr)
+        output = client_schema.dump(client_dao.find_all())
         return jsonify(output)
-    #POST
+    # POST
 
     def post(self):
         data = api.payload
@@ -78,14 +74,14 @@ class GetAndPost(Resource):
 
     # GET ALL
     def get(self):
-      engine = sqlalchemy.create_engine('mysql://root:123@localhost/loja')
-      Session = sessionmaker(bind=engine)
-      sessionobj = Session()
-      jsonStr = sessionobj.query(Equipment).all()
-      equipment_schema = EquipmentSchema(many=True)
-      sessionobj.commit()
-      output = equipment_schema.dump(jsonStr)
-      return jsonify(output)
+        engine = sqlalchemy.create_engine('mysql://root:123@localhost/loja')
+        Session = sessionmaker(bind=engine)
+        sessionobj = Session()
+        jsonStr = sessionobj.query(Equipment).all()
+        equipment_schema = EquipmentSchema(many=True)
+        sessionobj.commit()
+        output = equipment_schema.dump(jsonStr)
+        return jsonify(output)
 
     def post(self):
         data = api.payload
