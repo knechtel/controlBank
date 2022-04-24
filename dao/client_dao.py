@@ -1,12 +1,10 @@
 
 import sqlalchemy
-from models import *
-from sqlalchemy.orm import sessionmaker
-
-engine = sqlalchemy.create_engine('mysql://root:123@localhost/loja')
-Session = sessionmaker(bind=engine)
-sessionobj = Session()
+from models import Client
+from . import factory
 
 
 def find_all():
-    return NULL
+    sessionobj = factory.connect()
+    clients = sessionobj.query(Client).all()
+    return clients
