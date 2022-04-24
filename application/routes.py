@@ -10,6 +10,7 @@ from flask_restx import Resource
 from flask_marshmallow import Marshmallow
 from application import app, api
 from dao import client_dao, equipment_dao
+from flask_cors import CORS, cross_origin
 ma = Marshmallow(app)
 
 
@@ -27,8 +28,10 @@ class EquipmentSchema(ma.Schema):
 
 #################################
 
-
-@api.route('/api/')
+@cross_origin()
+@api.response(200, "Success")
+@cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
+@api.route('/client-findAll')
 class GetAndPost(Resource):
 
     # GET ALL
