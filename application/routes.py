@@ -1,16 +1,15 @@
 from dao.factory import *
-import equipamento_controller
+
 from flask import Flask, make_response, jsonify
 from models import Client, Equipment
-from sqlalchemy.orm import sessionmaker
-import sqlalchemy
-import json
+
 from flask import jsonify
 from flask_restx import Resource
 from flask_marshmallow import Marshmallow
 from application import app, api
 from dao import client_dao, equipment_dao
 from flask_cors import CORS, cross_origin
+
 ma = Marshmallow(app)
 
 
@@ -31,7 +30,7 @@ class EquipmentSchema(ma.Schema):
 @cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
 @api.route('/client-findById')
 class Client_get_post1(Resource):
-    #GET
+    # POST
     def post(self):
         data = api.payload
         client = client_dao.find_by_id(data["id"])
@@ -39,6 +38,7 @@ class Client_get_post1(Resource):
         output = client_schema.dump(client)
         return jsonify(output)
 #################################
+
 
 @cross_origin()
 @api.response(200, "Success")
