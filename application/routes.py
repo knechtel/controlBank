@@ -32,7 +32,7 @@ class EquipmentSchema(ma.Schema):
 @api.response(200, "Success")
 @cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
 @api.route('/client-findAll')
-class GetAndPost(Resource):
+class Client_get_post(Resource):
 
     # GET ALL
     def get(self):
@@ -54,7 +54,7 @@ class GetAndPost(Resource):
 
 
 @api.route('/api/equipment')
-class GetAndPost(Resource):
+class Equipment_get_post(Resource):
 
     # GET ALL
     def get(self):
