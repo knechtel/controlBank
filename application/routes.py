@@ -26,6 +26,18 @@ class EquipmentSchema(ma.Schema):
         fields = ("brand", "defect_for_repair", "model", "id")
 
 
+@cross_origin()
+@api.response(200, "Success")
+@cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
+@api.route('/client-findById')
+class Client_get_post1(Resource):
+    #GET
+    def post(self):
+        data = api.payload
+        client = client_dao.find_by_id(data["id"])
+        client_schema = ClientSchema()
+        output = client_schema.dump(client)
+        return jsonify(output)
 #################################
 
 @cross_origin()
@@ -72,4 +84,6 @@ class Equipment_get_post(Resource):
         equipment_schema = EquipmentSchema()
         output = equipment_schema.dump(equipment)
         return jsonify(output)
+
+
 #################################

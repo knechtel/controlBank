@@ -15,3 +15,8 @@ def save(client):
     sessionobj.expunge_all()
     sessionobj.add(client)
     sessionobj.commit()
+
+
+def find_by_id(id):
+    sessionobj = factory.connect()
+    return sessionobj.query(Client).get(id)
