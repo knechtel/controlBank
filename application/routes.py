@@ -1,9 +1,7 @@
 from dao.factory import *
 
-from flask import Flask, make_response, jsonify
-from models import Client, Equipment
-
 from flask import jsonify
+from models import Client, Equipment
 from flask_restx import Resource
 from flask_marshmallow import Marshmallow
 from application import app, api
@@ -29,7 +27,7 @@ class EquipmentSchema(ma.Schema):
 @api.response(200, "Success")
 @cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
 @api.route('/client-findById')
-class Client_get_post1(Resource):
+class Client_find_by_id(Resource):
     # POST
     def post(self):
         data = api.payload
@@ -37,7 +35,6 @@ class Client_get_post1(Resource):
         client_schema = ClientSchema()
         output = client_schema.dump(client)
         return jsonify(output)
-#################################
 
 
 @cross_origin()
@@ -84,6 +81,3 @@ class Equipment_get_post(Resource):
         equipment_schema = EquipmentSchema()
         output = equipment_schema.dump(equipment)
         return jsonify(output)
-
-
-#################################
