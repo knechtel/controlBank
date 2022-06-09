@@ -13,6 +13,17 @@ class AuthUserGroup(db.Model):
     username = db.Column(db.String(255))
 
 
+class Os_equipment(db.Model):
+    __tablename__ = 'os_equipment'
+    id = db.Column(db.Integer, primary_key=True)
+    os_id = db.Column(db.ForeignKey('os.id'), index=True)
+    equipment_id = db.Column(db.ForeignKey('equipment.id'), index=True)
+    os = db.relationship(
+        'Os', primaryjoin='Os_equipment.os_id == Os.id', backref='osq')
+    equipment = db.relationship(
+        'Equipment', primaryjoin='Os_equipment.equipment_id == Equipment.id', backref='osq')
+
+
 class  Client(db.Model):
     __tablename__ = 'client'
 
@@ -64,7 +75,7 @@ t_hibernate_sequence = db.Table(
 )
 
 
-class O(db.Model):
+class Os(db.Model):
     __tablename__ = 'os'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -72,9 +83,9 @@ class O(db.Model):
     equipment_id = db.Column(db.ForeignKey('equipment.id'), index=True)
 
     client = db.relationship(
-        'Client', primaryjoin='O.client_id == Client.id', backref='oes')
+        'Client', primaryjoin='Os.client_id == Client.id', backref='oes')
     equipment = db.relationship(
-        'Equipment', primaryjoin='O.equipment_id == Equipment.id', backref='oes')
+        'Equipment', primaryjoin='Os.equipment_id == Equipment.id', backref='oes')
 
 
 t_perfis = db.Table(
