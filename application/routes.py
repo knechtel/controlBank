@@ -20,7 +20,7 @@ class ClientSchema(ma.Schema):
 class EquipmentSchema(ma.Schema):
     class Meta:
         model = Equipment
-        fields = ("brand", "defect_for_repair", "model", "id")
+        fields = ("brand", "defect_for_repair", "model", "id", "cost_value")
 
 
 @cross_origin()
