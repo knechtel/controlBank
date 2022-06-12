@@ -15,6 +15,6 @@ def save(equipment):
     sessionobj.commit()
 
 
-def get_by_id(id):
+def get_by_id_client(id):
     sessionobj = factory.connect()
     return sessionobj.query(Equipment).where(Equipment.client_id == id).one()
