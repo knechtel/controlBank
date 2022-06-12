@@ -88,7 +88,7 @@ class Equipment_by_id(Resource):
     def get(self):
         print("testando")
         data = api.payload
-        equipment = equipment_dao.get_by_id(data["id"])
+        equipment = equipment_dao.get_by_id_client(data["id"])
         equipment_schema = EquipmentSchema()
         output = equipment_schema.dump(equipment)
         return jsonify(output)
