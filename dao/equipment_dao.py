@@ -13,3 +13,8 @@ def save(equipment):
     sessionobj.expunge_all()
     sessionobj.add(equipment)
     sessionobj.commit()
+
+
+def get_by_id(id):
+    sessionobj = factory.connect()
+    return sessionobj.query(Equipment).where(Equipment.client_id == id).one()

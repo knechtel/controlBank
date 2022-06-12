@@ -74,10 +74,21 @@ class Equipment_get_post(Resource):
 
     def post(self):
         data = api.payload
-        equipment = Equipment(pronto=True, autorizado=True, brand=data["brand"],
+        equipment = Equipment(pronto=True, autorizado=True, client_id=data["idClient"], brand=data["brand"],
                               defect_for_repair=data["defect_for_repair"], model=data["model"])
 
         equipment_dao.save(equipment)
+        equipment_schema = EquipmentSchema()
+        output = equipment_schema.dump(equipment)
+        return jsonify(output)
+
+
+@api.route('/api/equipmentById')
+class Equipment_by_id(Resource):
+    def get(self):
+        print("testando")
+        data = api.payload
+        equipment = equipment_dao.get_by_id(data["id"])
         equipment_schema = EquipmentSchema()
         output = equipment_schema.dump(equipment)
         return jsonify(output)
