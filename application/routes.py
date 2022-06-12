@@ -83,7 +83,7 @@ class Equipment_get_post(Resource):
         return jsonify(output)
 
 
-@api.route('/api/equipmentById')
+@api.route('/api/equipmentByIdClient')
 class Equipment_by_id(Resource):
     def get(self):
         print("testando")
