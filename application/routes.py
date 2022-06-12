@@ -85,7 +85,7 @@ class Equipment_get_post(Resource):
 
 @api.route('/api/equipmentByIdClient')
 class Equipment_by_id(Resource):
-    def get(self):
+    def post(self):
         print("testando")
         data = api.payload
         equipment = equipment_dao.get_by_id_client(data["id"])
