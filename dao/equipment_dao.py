@@ -1,6 +1,6 @@
 from . import factory
 from models import Equipment
-
+from datetime import date
 
 def find_all():
     sessionobj = factory.connect()
@@ -11,6 +11,9 @@ def find_all():
 def save(equipment):
     sessionobj = factory.connect()
     sessionobj.expunge_all()
+    if(equipment.data_entrada == None):
+        today = date.today()
+        equipment.data_entrada = today
     sessionobj.add(equipment)
     sessionobj.commit()
 
