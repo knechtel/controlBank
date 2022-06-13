@@ -55,7 +55,7 @@ class Client_get_post(Resource):
         client = Client(cpf=data["cpf"],
                         name=data["name"], email=data["email"])
 
-        equipment_dao.save(client)
+        client_dao.save(client)
 
         client_schema = ClientSchema()
         output = client_schema.dump(client)
