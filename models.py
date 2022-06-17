@@ -31,7 +31,7 @@ class  Client(db.Model):
     cpf = db.Column(db.String(255))
     email = db.Column(db.String(255))
     name = db.Column(db.String(255))
-
+    telefone = db.Column(db.String(255))
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__,
                           sort_keys=True, indent=4)

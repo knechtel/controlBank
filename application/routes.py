@@ -14,7 +14,7 @@ ma = Marshmallow(app)
 class ClientSchema(ma.Schema):
     class Meta:
         model = Client
-        fields = ("name", "cpf", "email", "id")
+        fields = ("name", "cpf", "email", "id", "telefone")
 
 
 class EquipmentSchema(ma.Schema):
@@ -53,7 +53,7 @@ class Client_get_post(Resource):
     def post(self):
         data = api.payload
         client = Client(cpf=data["cpf"],
-                        name=data["name"], email=data["email"])
+                        name=data["name"], email=data["email"], telefone=telefone["telefone"])
 
         client_dao.save(client)
 
@@ -61,6 +61,24 @@ class Client_get_post(Resource):
         output = client_schema.dump(client)
         return jsonify(output)
 
+
+@cross_origin()
+@api.response(200, "Success")
+@cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
+@api.route('/api/client')
+class Client_get_post(Resource):
+
+    # POST
+    def post(self):
+        data = api.payload
+        client = Client(cpf=data["cpf"],
+                        name=data["name"], email=data["email"], telefone=telefone["telefone"])
+
+        client_dao.save(client)
+
+        client_schema = ClientSchema()
+        output = client_schema.dump(client)
+        return jsonify(output)
 
 @api.route('/api/equipment')
 class Equipment_get_post(Resource):
@@ -91,4 +109,16 @@ class Equipment_by_id(Resource):
         equipment = equipment_dao.get_by_id_client(data["id"])
         equipment_schema = EquipmentSchema()
         output = equipment_schema.dump(equipment)
+        return jsonify(output)
+
+
+@api.route('/api/client-update')
+class Equipment_by_id(Resource):
+    def post(self):
+        data = api.payload
+        client = client_dao.find_by_id(data["id"])
+        client.name = data["name"]
+        client_dao.update(client)
+        client_schema = ClientSchema()
+        output = client_schema.dump(client)
         return jsonify(output)

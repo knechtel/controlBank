@@ -5,13 +5,14 @@ from datetime import date
 def find_all():
     sessionobj = factory.connect()
     equipments = sessionobj.query(Equipment).all()
+    sessionobj.close()
     return equipments
 
 
 def save(equipment):
     sessionobj = factory.connect()
     sessionobj.expunge_all()
-    if(equipment.data_entrada == None):
+    if(equipment.data_entrada == null):
         today = date.today()
         equipment.data_entrada = today
     sessionobj.add(equipment)
@@ -20,4 +21,7 @@ def save(equipment):
 
 def get_by_id_client(id):
     sessionobj = factory.connect()
-    return sessionobj.query(Equipment).where(Equipment.client_id == id).one()
+    equipment = sessionobj.query(Equipment).where(
+        Equipment.client_id == id).one()
+    sessionobj.close()
+    return equipment

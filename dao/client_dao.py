@@ -21,4 +21,17 @@ def save(client):
 
 def find_by_id(id):
     sessionobj = factory.connect()
-    return sessionobj.query(Client).get(id)
+    client = sessionobj.query(Client).get(id)
+    sessionobj.close()
+    return client
+
+
+def update(client):
+    sessionobj = factory.connect()
+    sessionobj.query(Client).filter(Client.id == client.id)\
+        .update({'name': client.name,
+                 'email': client.email,
+                 'telefone': client.telefone,
+                 'cpf': client.cpf})
+    sessionobj.commit()
+    sessionobj.close()
