@@ -118,6 +118,9 @@ class Equipment_by_id(Resource):
         data = api.payload
         client = client_dao.find_by_id(data["id"])
         client.name = data["name"]
+        client.telefone = data["telefone"]
+        client.cpf = data["cpf"]
+        client.cpf = data["email"]
         client_dao.update(client)
         client_schema = ClientSchema()
         output = client_schema.dump(client)
