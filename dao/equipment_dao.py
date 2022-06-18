@@ -12,7 +12,7 @@ def find_all():
 def save(equipment):
     sessionobj = factory.connect()
     sessionobj.expunge_all()
-    if(equipment.data_entrada == null):
+    if(equipment.data_entrada == None):
         today = date.today()
         equipment.data_entrada = today
     sessionobj.add(equipment)

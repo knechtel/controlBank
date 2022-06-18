@@ -53,7 +53,7 @@ class Client_get_post(Resource):
     def post(self):
         data = api.payload
         client = Client(cpf=data["cpf"],
-                        name=data["name"], email=data["email"], telefone=telefone["telefone"])
+                        name=data["name"], email=data["email"], telefone=data["telefone"])
 
         client_dao.save(client)
 
@@ -72,7 +72,7 @@ class Client_get_post(Resource):
     def post(self):
         data = api.payload
         client = Client(cpf=data["cpf"],
-                        name=data["name"], email=data["email"], telefone=telefone["telefone"])
+                        name=data["name"], email=data["email"], telefone=data["telefone"])
 
         client_dao.save(client)
 
