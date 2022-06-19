@@ -25,3 +25,15 @@ def get_by_id_client(id):
         Equipment.client_id == id).one()
     sessionobj.close()
     return equipment
+
+
+def update(equipment):
+    sessionobj = factory.connect()
+    sessionobj.query(Equipment).filter(Equipment.id == equipment.id)\
+        .update({'brand': equipment.brand,
+                 'cost_value': equipment.cost_value,
+                 'defect_for_repair': equipment.defect_for_repair,
+                 'model': equipment.model,
+                 'serial': equipment.serial})
+    sessionobj.commit()
+    sessionobj.close()
