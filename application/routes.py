@@ -93,7 +93,7 @@ class Equipment_get_post(Resource):
     def post(self):
         data = api.payload
         equipment = Equipment(pronto=True, autorizado=True, client_id=data["idClient"], brand=data["brand"],
-                              defect_for_repair=data["defect_for_repair"], model=data["model"])
+                              defect_for_repair=data["defect_for_repair"], model=data["model"], cost_value=data["preco"])
 
         equipment_dao.save(equipment)
         equipment_schema = EquipmentSchema()
@@ -111,6 +111,23 @@ class Equipment_by_id(Resource):
         output = equipment_schema.dump(equipment)
         return jsonify(output)
 
+
+@api.route('/api/equipment-update')
+class Equipment_update(Resource):
+    def post(self):
+        print("testando")
+        data = api.payload
+        equipment = equipment_dao.find_by_id(data["id"])
+        equipment.id = data["id"]
+        equipment.brand = data["brand"]
+        equipment.cost_value = data["cost_value"]
+        equipment.defect_for_repair = data["defect_for_repair"]
+        equipment.model = data["model"]
+        equipment.serial = data["serial"]
+        equipment = equipment_dao.update(equipment)
+        equipment_schema = EquipmentSchema()
+        output = equipment_schema.dump(equipment)
+        return jsonify(output)
 
 @api.route('/api/client-update')
 class Equipment_by_id(Resource):

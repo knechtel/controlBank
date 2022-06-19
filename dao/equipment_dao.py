@@ -37,3 +37,10 @@ def update(equipment):
                  'serial': equipment.serial})
     sessionobj.commit()
     sessionobj.close()
+
+
+def find_by_id(id):
+    sessionobj = factory.connect()
+    equipment = sessionobj.query(Equipment).get(id)
+    sessionobj.close()
+    return equipment
