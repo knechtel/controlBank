@@ -7,6 +7,7 @@ from flask_marshmallow import Marshmallow
 from application import app, api
 from dao import client_dao, equipment_dao
 from flask_cors import CORS, cross_origin
+import decimal
 
 ma = Marshmallow(app)
 
@@ -20,7 +21,8 @@ class ClientSchema(ma.Schema):
 class EquipmentSchema(ma.Schema):
     class Meta:
         model = Equipment
-        fields = ("brand", "defect_for_repair", "model", "id", "cost_value")
+        fields = ("brand", "defect_for_repair", "model",
+                  "id", "cost_value", "pronto", "entregue")
 
 
 @cross_origin()
@@ -92,7 +94,7 @@ class Equipment_get_post(Resource):
 
     def post(self):
         data = api.payload
-        equipment = Equipment(pronto=True, autorizado=True, client_id=data["idClient"], brand=data["brand"],
+        equipment = Equipment(pronto=data["pronto"], entregue=data["entregue"], autorizado=True, client_id=data["idClient"], brand=data["brand"],
                               defect_for_repair=data["defect_for_repair"], model=data["model"], cost_value=data["preco"])
 
         equipment_dao.save(equipment)
@@ -124,6 +126,8 @@ class Equipment_update(Resource):
         equipment.defect_for_repair = data["defect_for_repair"]
         equipment.model = data["model"]
         equipment.serial = data["serial"]
+        equipment.pronto = data["pronto"]
+        equipment.entregue = data["entregue"]
         equipment = equipment_dao.update(equipment)
         equipment_schema = EquipmentSchema()
         output = equipment_schema.dump(equipment)
@@ -137,7 +141,7 @@ class Equipment_by_id(Resource):
         client.name = data["name"]
         client.telefone = data["telefone"]
         client.cpf = data["cpf"]
-        client.cpf = data["email"]
+        client.email = data["email"]
         client_dao.update(client)
         client_schema = ClientSchema()
         output = client_schema.dump(client)

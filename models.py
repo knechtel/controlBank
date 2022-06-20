@@ -48,7 +48,8 @@ class Equipment(db.Model):
     serial = db.Column(db.String(255))
     client_id = db.Column(db.ForeignKey('client.id'), index=True)
     autorizado = db.Column(db.Boolean, nullable=True)
-    pronto = db.Column(db.Boolean, nullable=False)
+    pronto = db.Column(db.Boolean, nullable=True)
+    entregue = db.Column(db.Boolean, nullable=True)
     data_entrega = db.Column(db.DateTime)
     data_entrada = db.Column(db.DateTime)
 

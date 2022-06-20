@@ -34,7 +34,9 @@ def update(equipment):
                  'cost_value': equipment.cost_value,
                  'defect_for_repair': equipment.defect_for_repair,
                  'model': equipment.model,
-                 'serial': equipment.serial})
+                 'serial': equipment.serial,
+                 'pronto': equipment.pronto,
+                 'entregue': equipment.entregue})
     sessionobj.commit()
     sessionobj.close()
 
