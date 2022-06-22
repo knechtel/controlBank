@@ -22,7 +22,7 @@ class EquipmentSchema(ma.Schema):
     class Meta:
         model = Equipment
         fields = ("brand", "defect_for_repair", "model",
-                  "id", "cost_value", "pronto", "entregue")
+                  "id", "cost_value", "pronto", "entregue", "data_entrada")
 
 
 @cross_origin()
@@ -36,6 +36,28 @@ class Client_find_by_id(Resource):
         client = client_dao.find_by_id(data["id"])
         client_schema = ClientSchema()
         output = client_schema.dump(client)
+        return jsonify(output)
+
+    def get(self):
+        data = api.payload
+        client = client_dao.find_by_id(data["id"])
+        client_schema = ClientSchema()
+        output = client_schema.dump(client)
+        return jsonify(output)
+
+
+@cross_origin()
+@api.response(200, "Success")
+@cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
+@api.route('/api/equipment-findByDataEntrada')
+class Equipment_find_by_id_data_entrada(Resource):
+    # POST
+    def post(self):
+        data = api.payload
+        print(data["data_entrada"])
+        equipment = equipment_dao.find_by_entrada(data["data_entrada"])
+        equipment_schema = EquipmentSchema(many=True)
+        output = equipment_schema.dump(equipment)
         return jsonify(output)
 
 

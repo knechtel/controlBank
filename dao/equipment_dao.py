@@ -1,7 +1,8 @@
 from . import factory
 from models import Equipment
 from datetime import date
-
+from sqlalchemy import func
+from datetime import date
 def find_all():
     sessionobj = factory.connect()
     equipments = sessionobj.query(Equipment).all()
@@ -46,3 +47,15 @@ def find_by_id(id):
     equipment = sessionobj.query(Equipment).get(id)
     sessionobj.close()
     return equipment
+
+
+def find_by_entrada(data_entrada):
+    sessionobj = factory.connect()
+    equipments = sessionobj.query(Equipment)\
+        .filter(
+        Equipment.data_entrada == date(int(data_entrada[0:4]), int(
+            data_entrada[5:7]), int(data_entrada[8:10])))\
+        .all()
+    sessionobj.close()
+    print(equipments)
+    return equipments
