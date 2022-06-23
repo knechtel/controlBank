@@ -23,6 +23,7 @@ def find_by_id(id):
     sessionobj = factory.connect()
     client = sessionobj.query(Client).get(id)
     sessionobj.close()
+    print(client)
     return client
 
 

@@ -22,13 +22,13 @@ class EquipmentSchema(ma.Schema):
     class Meta:
         model = Equipment
         fields = ("brand", "defect_for_repair", "model",
-                  "id", "cost_value", "pronto", "entregue", "data_entrada")
+                  "id", "cost_value", "pronto", "entregue", "data_entrada", "client_id")
 
 
 @cross_origin()
 @api.response(200, "Success")
 @cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
-@api.route('/client-findById')
+@api.route('/api/client-findById')
 class Client_find_by_id(Resource):
     # POST
     def post(self):
@@ -64,7 +64,7 @@ class Equipment_find_by_id_data_entrada(Resource):
 @cross_origin()
 @api.response(200, "Success")
 @cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
-@api.route('/client-findAll')
+@api.route('/api/client-findAll')
 class Client_get_post(Resource):
 
     # GET ALL
