@@ -9,7 +9,7 @@ from dao import client_dao, equipment_dao
 from flask_cors import CORS, cross_origin
 import decimal
 import os
-from flask import Flask, send_from_directory
+
 ma = Marshmallow(app)
 
 
@@ -105,6 +105,7 @@ class Client_get_post(Resource):
         output = client_schema.dump(client)
         return jsonify(output)
 
+
 @api.route('/api/equipment')
 class Equipment_get_post(Resource):
 
@@ -156,6 +157,7 @@ class Equipment_update(Resource):
         output = equipment_schema.dump(equipment)
         return jsonify(output)
 
+
 @api.route('/api/client-update')
 class Equipment_by_id(Resource):
     def post(self):
@@ -173,6 +175,6 @@ class Equipment_by_id(Resource):
 
 @app.route('/download')
 def downloadFile():
-    #For windows you need to use drive name [ex: F:/Example.pdf]
+    # For windows you need to use drive name [ex: F:/Example.pdf]
     path = '/Users/maiquelknechtel/eclipse-workspace/generatePDF_maven/pdf/dynamic1.pdf'
     return send_file(path, as_attachment=True)
