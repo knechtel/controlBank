@@ -52,9 +52,6 @@ def find_by_id(id):
 
 
 def find_by_entrada(data_entrada):
-    print("dia: "+data_entrada[0:2])
-    print("mes: "+data_entrada[3:5])
-    print("ano: "+data_entrada[6:10])
     sessionobj = factory.connect()
     equipments = sessionobj.query(Equipment)\
         .filter(
